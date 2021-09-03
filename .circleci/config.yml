@@ -477,20 +477,20 @@ workflows:
           name: setup-cluster-custom-values
           executor: aws-eks/python
           cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-orb-test-custom-values
-          region: {$AWS_DEFAULT_REGION}
-          zones: "{$AWS_DEFAULT_REGION}b,{$AWS_DEFAULT_REGION}c"
+          region: "$AWS_DEFAULT_REGION"
+          zones: "${AWS_DEFAULT_REGION}b,${AWS_DEFAULT_REGION}c"
           filters: *integration_test_filters
       - setup-cluster-with-ssh:
           name: setup-cluster-custom-values-ssh
           executor: macos
           cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-orb-test-custom-values-ssh
-          region: {$AWS_DEFAULT_REGION}
-          zones: "{$AWS_DEFAULT_REGION}b,{$AWS_DEFAULT_REGION}c"
+          region: "$AWS_DEFAULT_REGION"
+          zones: "${AWS_DEFAULT_REGION}b,${AWS_DEFAULT_REGION}c"
           filters: *integration_test_filters
       - test-cluster:
           name: test-cluster-defaults
           executor: python2-browsers
-          region: $AWS_DEFAULT_REGION
+          region: "$AWS_DEFAULT_REGION"
           cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-orb-test-defaults
           requires:
             - setup-cluster-defaults
@@ -498,7 +498,7 @@ workflows:
       - test-cluster:
           name: test-cluster-custom-values
           executor: python3-browsers
-          region: {$AWS_DEFAULT_REGION}
+          region: "$AWS_DEFAULT_REGION"
           cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-orb-test-custom-values
           requires:
             - setup-cluster-custom-values
@@ -506,7 +506,7 @@ workflows:
       - test-cluster:
           name: test-cluster-custom-values-ssh
           executor: python2-browsers
-          region: {$AWS_DEFAULT_REGION}
+          region: "$AWS_DEFAULT_REGION"
           cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-orb-test-custom-values-ssh
           requires:
             - setup-cluster-custom-values-ssh
@@ -515,7 +515,7 @@ workflows:
           executor:
             name: aws-eks/python
             tag: "3.6"
-          region: {$AWS_DEFAULT_REGION}
+          region: "$AWS_DEFAULT_REGION"
           cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-orb-test-custom-values-ssh
           release-name: grafana-release
           requires:
@@ -540,7 +540,7 @@ workflows:
           executor: aws-eks/python2
           cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-orb-test-defaults
           profile: ""
-          region: $AWS_DEFAULT_REGION
+          region: "$AWS_DEFAULT_REGION"
           requires:
             - setup-cluster-defaults
           filters: *integration_test_filters
@@ -569,7 +569,7 @@ workflows:
           name: delete-cluster-custom-values
           executor: aws-eks/python3
           cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-orb-test-custom-values
-          region: {$AWS_DEFAULT_REGION}
+          region: "$AWS_DEFAULT_REGION"
           requires:
             - test-cluster-custom-values
           filters: *integration_test_filters
@@ -577,7 +577,7 @@ workflows:
           name: delete-cluster-custom-values-ssh
           executor: macos
           cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-orb-test-custom-values-ssh
-          region: {$AWS_DEFAULT_REGION}
+          region: "$AWS_DEFAULT_REGION"
           requires:
             - test-ssh-access
           filters: *integration_test_filters
@@ -619,12 +619,12 @@ workflows:
       - aws-eks/create-cluster:
           name: setup-cluster-kubectl
           cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-eks-orb-test-kubectl
-          aws-region: {$AWS_DEFAULT_REGION}
+          aws-region: "$AWS_DEFAULT_REGION"
           filters: *integration_test_filters
       - create-deployment:
           name: create-deployment-kubectl
           executor: aws-eks/python
-          region: {$AWS_DEFAULT_REGION}
+          region: "$AWS_DEFAULT_REGION"
           cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-eks-orb-test-kubectl
           requires:
             - setup-cluster-kubectl
@@ -632,7 +632,7 @@ workflows:
       - aws-eks/update-container-image:
           name: update-container-image-kubectl
           cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-eks-orb-test-kubectl
-          aws-region: {$AWS_DEFAULT_REGION}
+          aws-region: "$AWS_DEFAULT_REGION"
           resource-name: "deployment/nginx-deployment"
           container-image-updates: "nginx=nginx:1.9.1"
           get-rollout-status: true
@@ -649,7 +649,7 @@ workflows:
       - aws-eks/delete-cluster:
           name: delete-cluster-kubectl
           cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-eks-orb-test-kubectl
-          aws-region: {$AWS_DEFAULT_REGION}
+          aws-region: "$AWS_DEFAULT_REGION"
           wait: true
           requires:
             - update-container-image-kubectl
