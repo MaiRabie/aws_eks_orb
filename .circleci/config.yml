@@ -16,7 +16,7 @@ jobs:
           resource-file-path: tests/nginx-deployment/deployment.yaml
           resource-name: deployment/nginx-deployment
 orbs:
-  aws-eks: circleci/aws-eks@0.2.3
+  aws-eks: circleci/aws-eks@1.1.0
   kubernetes: circleci/kubernetes@0.4.0
 version: 2.1
 workflows:
