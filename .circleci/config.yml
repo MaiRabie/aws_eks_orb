@@ -1,94 +1,98 @@
-version: 2.1
-
-orbs:
-  aws-eks: circleci/aws-eks@1.1.0
-  cli: circleci/circleci-cli@0.1.2
-  helm: circleci/helm@1.2.0
-  orb-tools: circleci/orb-tools@7.3.0
-  kubernetes: circleci/kubernetes@0.4.0
-
-executors:
-  macos:
-    macos:
-      xcode: "10.1.0"
-  python2-browsers:
-    docker:
-      - image: circleci/python:2.7-browsers
-  python3-browsers:
-    docker:
-      - image: circleci/python:3-browsers
-
-commands:
-  cluster-setup-check:
-    steps:
-      - run:
-          name: Check if test env should be set up
-          command: |
-            if [ "${SKIP_TEST_ENV_CREATION}" = "true" ]
-            then
-              circleci step halt
-            fi
-  cluster-teardown-check:
-    steps:
-      - run:
-          name: Check if test env should be destroyed
-          command: |
-            if [ "${SKIP_TEST_ENV_TEARDOWN}" = "true" ]
-            then
-              circleci step halt
-            fi
-  quick-cluster-tests:
-    steps:
-      - run:
-          name: Run some tests on the cluster
-          command: |
-            kubectl get nodes
-            kubectl cluster-info
-            kubectl config view
-            kubectl config get-contexts
-            kubectl get pods --namespace kube-system
-
 jobs:
-  create-deployment:
+  test-cluster:
+    executor: aws-eks/python3
     parameters:
-      executor:
-        type: executor
-      region:
-        type: string
-        default: ""
       cluster-name:
         description: |
           Name of the EKS cluster
         type: string
-    executor: aws-eks/python3
     steps:
-      - checkout
+      - kubernetes/install
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: << parameters.cluster-name >>
-          aws-region: << parameters.region >>
-          install-kubectl: true
-      - kubernetes/create-or-update-resource:
-          resource-file-path: "tests/nginx-deployment/deployment.yaml"
-          resource-name: "deployment/nginx-deployment"
-          get-rollout-status: true
-          show-kubectl-command: true
+      - run:
+          command: |
+            kubectl get services
+          name: Test cluster
+  create-cluster:
+    executor: aws-eks/python3
+    steps:
+      - run:
+          command: |
+            ~aws_eks_orb/src/commands/install-eksctl.yml
 
+orbs:
+  aws-eks: circleci/aws-eks@0.2.3
+  kubernetes: circleci/kubernetes@0.4.0
+version: 2.1
 workflows:
   deployment:
     jobs:
-      # jobs to test kubectl usage
-      - aws-eks/create-cluster:
-          name: setup-cluster-kubectl
-          cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-eks-orb-test-kubectl
-          aws-region: "us-east-2"
-
-      - create-deployment:
-          name: create-deployment-kubectl
-          executor: aws-eks/python
-          region: "us-east-2"
-          cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-eks-orb-test-kubectl
+      - create-cluster
+      - test-cluster:
+          cluster-name: my-eks-demo
           requires:
-            - aws-eks/create-cluster
+            - create-cluster
+      - aws-eks/delete-cluster:
+          cluster-name: my-eks-demo
+          requires:
+            - test-cluster
+
+#version: 2.1
+#
+#orbs:
+#  aws-eks: circleci/aws-eks@0.2.3
+#  kubernetes: circleci/kubernetes@0.4.0
+##  aws-eks: circleci/aws-eks@1.1.0
+##  cli: circleci/circleci-cli@0.1.2
+##  kubernetes: circleci/kubernetes@0.4.0
+##  helm: circleci/helm@1.2.0
+##  orb-tools: circleci/orb-tools@7.3.0
+#
+#
+#jobs:
+#  create-deployment:
+#    parameters:
+#      executor:
+#        type: executor
+#      region:
+#        type: string
+#        default: ""
+#      cluster-name:
+#        description: |
+#          Name of the EKS cluster
+#        type: string
+#    executor: aws-eks/python3
+#    steps:
+#      - checkout
+#      - aws-eks/update-kubeconfig-with-authenticator:
+#          cluster-name: << parameters.cluster-name >>
+#          aws-region: << parameters.region >>
+#          install-kubectl: true
+#      - kubernetes/create-or-update-resource:
+#          resource-file-path: "tests/nginx-deployment/deployment.yaml"
+#          resource-name: "deployment/nginx-deployment"
+#          get-rollout-status: true
+#          show-kubectl-command: true
+#
+#workflows:
+#  deployment:
+#    jobs:
+#      - aws-eks/create-cluster:
+##          name: setup-cluster-kubectl
+#          cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-eks-orb-test-kubectl
+#          aws-region: "us-east-2"
+#
+#      - create-deployment:
+#          name: create-deployment-kubectl
+#          executor: aws-eks/python3
+#          region: "us-east-2"
+#          cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-eks-orb-test-kubectl
+#          requires:
+#            - aws-eks/create-cluster
+#
+
+#              ********************************************************************************
 #      - aws-eks/update-container-image:
 #          name: update-container-image-kubectl
 #          cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-eks-orb-test-kubectl
