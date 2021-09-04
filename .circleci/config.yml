@@ -448,8 +448,8 @@ workflows:
           tag: integration
           use-git-diff: false
           static-release-type: patch
-          requires:
-            - orb-tools/publish-dev
+          # requires:
+          #   - orb-tools/publish-dev
           filters:
             branches:
               ignore: master
@@ -459,8 +459,8 @@ workflows:
           tag: master
           use-git-diff: false
           static-release-type: patch
-          requires:
-            - orb-tools/publish-dev
+          # requires:
+          #   - orb-tools/publish-dev
           filters:
             branches:
               only: master
