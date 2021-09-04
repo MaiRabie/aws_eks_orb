@@ -1,3 +1,8 @@
+orbs:
+  aws-eks: circleci/aws-eks@1.1.0
+  kubernetes: circleci/kubernetes@0.4.0
+version: 2.1
+
 jobs:
   create-deployment:
     executor: aws-eks/python3
@@ -12,13 +17,11 @@ jobs:
           cluster-name: << parameters.cluster-name >>
           install-kubectl: true
       - kubernetes/create-or-update-resource:
+          resource-file-path: "tests/nginx-deployment/deployment.yaml"
+          resource-name: "deployment/nginx-deployment"
           get-rollout-status: true
-          resource-file-path: tests/nginx-deployment/deployment.yaml
-          resource-name: deployment/nginx-deployment
-orbs:
-  aws-eks: circleci/aws-eks@1.1.0
-  kubernetes: circleci/kubernetes@0.4.0
-version: 2.1
+          show-kubectl-command: true
+
 workflows:
   deployment:
     jobs:
@@ -30,17 +33,12 @@ workflows:
             - aws-eks/create-cluster
       - aws-eks/update-container-image:
           cluster-name: eks-demo-deployment
-          container-image-updates: 'nginx=nginx:1.9.1'
-          post-steps:
-            - kubernetes/delete-resource:
-                resource-names: nginx-deployment
-                resource-types: deployment
-                wait: true
+          resource-name: "deployment/nginx-deployment"
+          container-image-updates: "nginx=nginx:1.9.1"
           record: true
           requires:
             - create-deployment
-          resource-name: deployment/nginx-deployment
       - aws-eks/delete-cluster:
           cluster-name: eks-demo-deployment
           requires:
-            - aws-eks/update-container-image
+              - aws-eks/update-container-image
