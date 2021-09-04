@@ -35,7 +35,7 @@ jobs:
             rmdir eksctl_download
       - aws-eks/create-cluster:
           cluster-name: my-eks-demo  
-          kubernetes-version: "1.14"    
+          # kubernetes-version: "1.14"    
 orbs:
   aws-eks: circleci/aws-eks@0.2.3
   kubernetes: circleci/kubernetes@0.12.0
