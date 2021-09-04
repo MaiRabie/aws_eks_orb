@@ -1,160 +1,118 @@
 version: 2.1
 
 orbs:
-  aws-eks: circleci/aws-eks@0.2.0
-  aws-ecr: circleci/aws-ecr@3.1.0
-  kubernetes: circleci/kubernetes@0.3.0
+  aws-eks: circleci/aws-eks@1.1.0
+  cli: circleci/circleci-cli@0.1.2
+  helm: circleci/helm@1.2.0
+  orb-tools: circleci/orb-tools@7.3.0
+  kubernetes: circleci/kubernetes@0.4.0
+
+executors:
+  macos:
+    macos:
+      xcode: "10.1.0"
+  python2-browsers:
+    docker:
+      - image: circleci/python:2.7-browsers
+  python3-browsers:
+    docker:
+      - image: circleci/python:3-browsers
+
+commands:
+  cluster-setup-check:
+    steps:
+      - run:
+          name: Check if test env should be set up
+          command: |
+            if [ "${SKIP_TEST_ENV_CREATION}" = "true" ]
+            then
+              circleci step halt
+            fi
+  cluster-teardown-check:
+    steps:
+      - run:
+          name: Check if test env should be destroyed
+          command: |
+            if [ "${SKIP_TEST_ENV_TEARDOWN}" = "true" ]
+            then
+              circleci step halt
+            fi
+  quick-cluster-tests:
+    steps:
+      - run:
+          name: Run some tests on the cluster
+          command: |
+            kubectl get nodes
+            kubectl cluster-info
+            kubectl config view
+            kubectl config get-contexts
+            kubectl get pods --namespace kube-system
 
 jobs:
-  deploy-application:
-    executor: aws-eks/python3
+  create-deployment:
     parameters:
+      executor:
+        type: executor
+      region:
+        type: string
+        default: ""
       cluster-name:
         description: |
           Name of the EKS cluster
         type: string
-      docker-image-name:
-        description: |
-          Name of the docker image to be deployed
-        type: string
-      version-info:
-        description: |
-          App version information
-        type: string
-      aws-region:
-        description: |
-          AWS region
-        type: string
-        default: ""
+    executor: aws-eks/python3
     steps:
       - checkout
-      - run:
-          name: Create deployment manifest
-          command: |
-            # Replace the placeholders in the manifest with the intended values.
-            # This is to avoid hardcoding the image name in the manifest, to make this
-            # demo project more portable.
-            BUILD_DATE=$(date '+%Y%m%d%H%M%S')
-            cat deployment/demo-app-deployment.yaml.template |\
-               sed "s|DOCKER_IMAGE_NAME|<< parameters.docker-image-name >>|\
-                g;s|BUILD_DATE_VALUE|$BUILD_DATE|g;s|VERSION_INFO_VALUE|\
-                << parameters.version-info >>|g" > deployment/demo-app-deployment.yaml
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: << parameters.cluster-name >>
+          aws-region: << parameters.region >>
           install-kubectl: true
-          aws-region: << parameters.aws-region >>
       - kubernetes/create-or-update-resource:
-          resource-file-path: "deployment/demo-app-deployment.yaml"
+          resource-file-path: "tests/nginx-deployment/deployment.yaml"
+          resource-name: "deployment/nginx-deployment"
           get-rollout-status: true
-          resource-name: deployment/demoapp
-      - kubernetes/create-or-update-resource:
-          resource-file-path: "deployment/demo-app-service.yaml"
-  test-application:
-    executor: aws-eks/python3
-    parameters:
-      cluster-name:
-        description: |
-          Name of the EKS cluster
-        type: string
-      aws-region:
-        description: |
-          AWS region
-        type: string
-        default: ""
-      expected-version-info:
-        description: |
-          Expected app version (this is used for testing that the
-          correct version has been deployed)
-        type: string
-    steps:
-      - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: << parameters.cluster-name >>
-          install-kubectl: true
-          aws-region: << parameters.aws-region >>
-      - run:
-          name: Wait for service to be ready
-          command: |
-            kubectl get pods
-            kubectl get services
-            sleep 30
-            for attempt in {1..20}; do
-              EXTERNAL_IP=$(kubectl get service demoapp | awk '{print $4}' | tail -n1)
-              echo "Checking external IP: ${EXTERNAL_IP}"
-              if [ -n "${EXTERNAL_IP}" ] && [ -z $(echo "${EXTERNAL_IP}" | grep "pending") ]; then
-                break
-              fi
-              echo "Waiting for external IP to be ready: ${EXTERNAL_IP}"
-              sleep 10
-            done
-            sleep 180
-            curl -s --retry 10 "http://$EXTERNAL_IP" | grep "<< parameters.expected-version-info >>"
-  undeploy-application:
-    executor: aws-eks/python3
-    parameters:
-      cluster-name:
-        description: |
-          Name of the EKS cluster
-        type: string
-      aws-region:
-        description: |
-          AWS region
-        type: string
-        default: ""
-    steps:
-      - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: << parameters.cluster-name >>
-          install-kubectl: true
-          aws-region: << parameters.aws-region >>
-      - kubernetes/delete-resource:
-          resource-types: "deployment,service"
-          label-selector: "app=demo"
-          wait: true
-      - run:
-          name: Check on pod status
-          command: |
-            kubectl get pods
+          show-kubectl-command: true
+
 workflows:
   deployment:
     jobs:
-      - aws-ecr/build_and_push_image:
-          name: build-and-push-image
-          account-url: AWS_ECR_URL
-          region: AWS_DEFAULT_REGION
-          repo: eks_orb_demo_app
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          dockerfile: ~/project/demo_app/Dockerfile
-          path: ~/project/demo_app
-          tag: ${CIRCLE_SHA1}
-          # Uncomment if the repository does not yet exist
-          create-repo: true
+      # jobs to test kubectl usage
       - aws-eks/create-cluster:
-          cluster-name: eks-orb-demo-app-deployment
-          aws-region: $AWS_DEFAULT_REGION
-          requires:
-            - build-and-push-image
-      - deploy-application:
-          cluster-name: eks-orb-demo-app-deployment
-          aws-region: $AWS_DEFAULT_REGION
-          docker-image-name: "${AWS_ECR_URL}/eks_orb_demo_app:${CIRCLE_SHA1}"
-          version-info: "${CIRCLE_SHA1}"
+          name: setup-cluster-kubectl
+          cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-eks-orb-test-kubectl
+          aws-region: "us-east-2"
+
+      - create-deployment:
+          name: create-deployment-kubectl
+          executor: aws-eks/python
+          region: "us-east-2"
+          cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-eks-orb-test-kubectl
           requires:
             - aws-eks/create-cluster
-      - test-application:
-          name: test-application
-          cluster-name: eks-orb-demo-app-deployment
-          aws-region: $AWS_DEFAULT_REGION
-          expected-version-info: "${CIRCLE_SHA1}"
-          requires:
-            - deploy-application
-      - undeploy-application:
-          cluster-name: eks-orb-demo-app-deployment
-          aws-region: $AWS_DEFAULT_REGION
-          requires:
-            - test-application
-      - aws-eks/delete-cluster:
-          cluster-name: eks-orb-demo-app-deployment
-          aws-region: $AWS_DEFAULT_REGION
-          wait: true
-          requires:
-            - undeploy-application
+#      - aws-eks/update-container-image:
+#          name: update-container-image-kubectl
+#          cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-eks-orb-test-kubectl
+#          aws-region: "ap-southeast-1"
+#          resource-name: "deployment/nginx-deployment"
+#          container-image-updates: "nginx=nginx:1.9.1"
+#          get-rollout-status: true
+#          record: true
+#          post-steps:
+#            - kubernetes/delete-resource:
+#                resource-types: "deployments"
+#                resource-names: "nginx-deployment"
+#                now: true
+#                wait: true
+#          requires:
+#            - create-deployment-kubectl
+#          filters: *integration_test_filters
+#      - aws-eks/delete-cluster:
+#          name: delete-cluster-kubectl
+#          cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-eks-orb-test-kubectl
+#          aws-region: "ap-southeast-1"
+#          wait: true
+#          requires:
+#            - update-container-image-kubectl
+#          filters: *integration_test_filters
+  # Tag-triggered workflow to promote a dev orb into production.
+  # The tag is expected to have been applied manually.
