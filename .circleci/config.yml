@@ -426,6 +426,44 @@ jobs:
               ${CIRCLE_TOKEN}
             fi
 workflows:
+  lint_pack-validate_publish-dev:
+    jobs:
+      - orb-tools/lint
+      - orb-tools/pack:
+          requires:
+            - orb-tools/lint
+      # - queue/block_workflow:
+      #     consider-branch: false
+      #     time: '60'
+      #     requires:
+      #       - orb-tools/pack
+      # - orb-tools/publish-dev:
+      #     orb-name: circleci/aws-eks
+      #     context: orb-publishing
+      #     requires:
+      #       - queue/block_workflow
+      - orb-tools/trigger-integration-workflow:
+          name: trigger-integration-dev
+          ssh-fingerprints: 2a:7f:74:c8:92:7a:a6:42:05:c8:6f:06:62:24:bc:ba
+          tag: integration
+          use-git-diff: false
+          static-release-type: patch
+          requires:
+            - orb-tools/publish-dev
+          filters:
+            branches:
+              ignore: master
+      - orb-tools/trigger-integration-workflow:
+          name: trigger-integration-master
+          ssh-fingerprints: 2a:7f:74:c8:92:7a:a6:42:05:c8:6f:06:62:24:bc:ba
+          tag: master
+          use-git-diff: false
+          static-release-type: patch
+          requires:
+            - orb-tools/publish-dev
+          filters:
+            branches:
+              only: master
   integration-tests:
     jobs:
       # jobs to test various commands
