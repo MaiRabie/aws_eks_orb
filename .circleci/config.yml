@@ -14,6 +14,12 @@ jobs:
           command: |
             kubectl get services
           name: Test cluster
+  create-cluster:
+    steps:
+      -run:
+          command: |
+            ~aws_eks_orb/src/commands/install-eksctl.yml
+
 orbs:
   aws-eks: circleci/aws-eks@0.2.3
   kubernetes: circleci/kubernetes@0.4.0
@@ -21,7 +27,8 @@ version: 2.1
 workflows:
   deployment:
     jobs:
-      - aws-eks/create-cluster:
+      - create-cluster:
+
           cluster-name: my-eks-demo
       - test-cluster:
           cluster-name: my-eks-demo
