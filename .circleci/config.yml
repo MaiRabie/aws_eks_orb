@@ -34,7 +34,8 @@ jobs:
             $SUDO mv eksctl_download/eksctl /usr/local/bin/
             rmdir eksctl_download
       - aws-eks/create-cluster:
-          cluster-name: my-eks-demo      
+          cluster-name: my-eks-demo  
+          kubernetes-version: "1.21"    
 orbs:
   aws-eks: circleci/aws-eks@0.2.3
   kubernetes: circleci/kubernetes@0.12.0
