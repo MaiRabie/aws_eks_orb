@@ -15,27 +15,62 @@ jobs:
             kubectl get services
           name: Test cluster
   create-cluster:
+    executor: aws-eks/python3
     steps:
-      -run:
+      - run:
           command: |
-            ~aws_eks_orb/src/commands/install-eksctl.yml
-
+            if which eksctl > /dev/null; then
+              echo "eksctl is already installed"
+              exit 0
+            fi
+            mkdir -p eksctl_download
+            curl --silent --location --retry 5 "https://github.com/weaveworks/eksctl/releases/download/0.20.0/eksctl_Linux_amd64.tar.gz" \
+              | tar xz -C eksctl_download
+            chmod +x eksctl_download/eksctl
+            SUDO=""
+            if [ $(id -u) -ne 0 ] && which sudo > /dev/null ; then
+              SUDO="sudo"
+            fi
+            $SUDO mv eksctl_download/eksctl /usr/local/bin/
+            rmdir eksctl_download
+      - aws-eks/create-cluster:
+          cluster-name: my-eks-demo
+          # kubernetes-version: "1.14"
+  delete-cluster:
+    executor: aws-eks/python3
+    steps:
+      - run:
+          command: |
+            if which eksctl > /dev/null; then
+              echo "eksctl is already installed"
+              exit 0
+            fi
+            mkdir -p eksctl_download
+            curl --silent --location --retry 5 "https://github.com/weaveworks/eksctl/releases/download/0.20.0/eksctl_Linux_amd64.tar.gz" \
+              | tar xz -C eksctl_download
+            chmod +x eksctl_download/eksctl
+            SUDO=""
+            if [ $(id -u) -ne 0 ] && which sudo > /dev/null ; then
+              SUDO="sudo"
+            fi
+            $SUDO mv eksctl_download/eksctl /usr/local/bin/
+            rmdir eksctl_download
+      - aws-eks/delete-cluster:
+          cluster-name: my-eks-demo
+          # kubernetes-version: "1.14"
 orbs:
   aws-eks: circleci/aws-eks@0.2.3
-  kubernetes: circleci/kubernetes@0.4.0
+  kubernetes: circleci/kubernetes@0.12.0
 version: 2.1
 workflows:
   deployment:
     jobs:
-      - create-cluster:
-
-          cluster-name: my-eks-demo
+      - create-cluster
       - test-cluster:
           cluster-name: my-eks-demo
           requires:
-            - aws-eks/create-cluster
-      - aws-eks/delete-cluster:
-          cluster-name: my-eks-demo
+            - create-cluster
+      - delete-cluster:
           requires:
             - test-cluster
 
