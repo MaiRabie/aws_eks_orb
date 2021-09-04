@@ -24,7 +24,7 @@ jobs:
               exit 0
             fi
             mkdir -p eksctl_download
-            curl --silent --location --retry 5 "https://github.com/weaveworks/eksctl/releases/download/1.20.0/eksctl_Linux_amd64.tar.gz" \
+            curl --silent --location --retry 5 "https://github.com/weaveworks/eksctl/releases/download/0.14.0/eksctl_Linux_amd64.tar.gz" \
               | tar xz -C eksctl_download
             chmod +x eksctl_download/eksctl
             SUDO=""
@@ -35,7 +35,7 @@ jobs:
             rmdir eksctl_download
       - aws-eks/create-cluster:
           cluster-name: my-eks-demo  
-          kubernetes-version: "1.16"    
+          kubernetes-version: "1.14"    
 orbs:
   aws-eks: circleci/aws-eks@0.2.3
   kubernetes: circleci/kubernetes@0.12.0
