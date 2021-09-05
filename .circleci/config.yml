@@ -88,16 +88,16 @@ version: 2.1
 workflows:
   deployment:
     jobs:
-      - create-cluster
-      - test-cluster:
-          cluster-name: my-eks-demo
-          requires:
-            - create-cluster
+      # - create-cluster
+      # - test-cluster:
+      #     cluster-name: my-eks-demo
+      #     requires:
+      #       - create-cluster
       - create-deployment:
           name: create-deployment-kubectl
           executor: aws-eks/python
           region: "us-east-2"
-          cluster-name: ${AWS_RESOURCE_NAME_PREFIX}-eks-orb-test-kubectl
+          cluster-name: my-eks-demo
           requires:
             - test-cluster            
       - delete-cluster:
