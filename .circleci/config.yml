@@ -98,8 +98,8 @@ workflows:
           executor: aws-eks/python
           region: "us-east-2"
           cluster-name: my-eks-demo
-          # requires:
-          #   - test-cluster            
+          requires:
+            - create-cluster           
       # - delete-cluster:
       #     requires:
       #       - test-cluster
