@@ -88,7 +88,7 @@ version: 2.1
 workflows:
   deployment:
     jobs:
-      # - create-cluster
+      - create-cluster
       # - test-cluster:
       #     cluster-name: my-eks-demo
       #     requires:
@@ -98,11 +98,11 @@ workflows:
           executor: aws-eks/python
           region: "us-east-2"
           cluster-name: my-eks-demo
-          requires:
-            - test-cluster            
-      - delete-cluster:
-          requires:
-            - test-cluster
+          # requires:
+          #   - test-cluster            
+      # - delete-cluster:
+      #     requires:
+      #       - test-cluster
 
 #version: 2.1
 #
