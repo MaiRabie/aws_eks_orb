@@ -36,12 +36,7 @@ jobs:
       - aws-eks/create-cluster:
           cluster-name: my-eks-demo
           # kubernetes-version: "1.14"
-      - run:
-          command: |
-            dockerpath="78dadb74358b/capston"
-            kubectl run my-eks-demo --image=$dockerpath --port=80
-            kubectl get pods
-            kubectl port-forward capston 8000:80
+
   delete-cluster:
     executor: aws-eks/python3
     steps:
@@ -82,6 +77,12 @@ jobs:
           cluster-name: << parameters.cluster-name >>
           aws-region: << parameters.region >>
           install-kubectl: true
+      - run:
+          command: |
+            dockerpath="78dadb74358b/capston"
+            kubectl run my-eks-demo --image=$dockerpath --port=80
+            kubectl get pods
+            kubectl port-forward capston 8000:80    
       - kubernetes/create-or-update-resource:
           resource-file-path: "https://hub.docker.com/repository/docker/78dadb74358b"
           resource-name: "78dadb74358b/helloworldweb"
@@ -96,18 +97,18 @@ version: 2.1
 workflows:
   deployment:
     jobs:
-      - create-cluster
+      # - create-cluster
       # - test-cluster:
       #     cluster-name: my-eks-demo
       #     requires:
       #       - create-cluster
-      # - create-deployment:
-      #     name: create-deployment-kubectl
-      #     executor: aws-eks/python
-      #     region: "us-east-2"
-      #     cluster-name: my-eks-demo
-      #     requires:
-      #       - create-cluster           
+      - create-deployment:
+          name: create-deployment-kubectl
+          executor: aws-eks/python
+          region: "us-east-2"
+          cluster-name: my-eks-demo
+          # requires:
+          #   - create-cluster           
       # - delete-cluster:
       #     requires:
       #       - test-cluster
