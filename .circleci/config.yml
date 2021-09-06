@@ -124,7 +124,7 @@ jobs:
           aws-region: << parameters.aws-region >>
       - kubernetes/delete-resource:
           resource-types: "deployment"
-          label-selector: "nginx-deployment"
+          label-selector: "nginx-deployment-new"
           wait: true
       - run:
           name: Check on pod status
@@ -143,16 +143,18 @@ workflows:
       #     cluster-name: my-eks-demo
       #     requires:
       # #       - create-cluster
-      - create-deployment:
-          name: create-deployment-kubectl
-          executor: aws-eks/python
-          region: "us-east-2"
-          cluster-name: my-eks-demo
-          # requires:
+      # - create-deployment:
+      #     name: create-deployment-kubectl
+      #     executor: aws-eks/python
+      #     region: "us-east-2"
+      #     cluster-name: my-eks-demo
+      #     # requires:
           #   - create-cluster
       - undeploy-application:
           cluster-name: my-eks-demo
           aws-region: "us-east-2"
+          # requires:
+          #   - create-deployment          
       # - aws-eks/update-container-image:
       #    name: update-container-image-kubectl
       #    cluster-name: my-eks-demo
