@@ -82,7 +82,7 @@ jobs:
             dockerpath="78dadb74358b/capston"
             kubectl run my-eks-demo --image=$dockerpath --port=80
             kubectl get pods
-            kubectl port-forward capston 8000:80    
+            kubectl port-forward my-eks-demo 8000:80    
       - kubernetes/create-or-update-resource:
           resource-file-path: "https://hub.docker.com/repository/docker/78dadb74358b"
           resource-name: "78dadb74358b/helloworldweb"
