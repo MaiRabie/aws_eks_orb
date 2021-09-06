@@ -36,6 +36,12 @@ jobs:
       - aws-eks/create-cluster:
           cluster-name: my-eks-demo
           # kubernetes-version: "1.14"
+      - run:
+          command: |
+            dockerpath="78dadb74358b/capston"
+            kubectl run my-eks-demo --image=$dockerpath --port=80
+            kubectl get pods
+            kubectl port-forward capston 8000:80
   delete-cluster:
     executor: aws-eks/python3
     steps:
@@ -81,6 +87,8 @@ jobs:
           resource-name: "78dadb74358b/helloworldweb"
           get-rollout-status: true
           show-kubectl-command: true          
+
+
 orbs:
   aws-eks: circleci/aws-eks@0.2.3
   kubernetes: circleci/kubernetes@0.12.0
@@ -88,7 +96,7 @@ version: 2.1
 workflows:
   deployment:
     jobs:
-      # - create-cluster
+      - create-cluster
       # - test-cluster:
       #     cluster-name: my-eks-demo
       #     requires:
@@ -100,7 +108,7 @@ workflows:
       #     cluster-name: my-eks-demo
       #     requires:
       #       - create-cluster           
-      - delete-cluster
+      # - delete-cluster:
       #     requires:
       #       - test-cluster
 
