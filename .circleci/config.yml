@@ -89,7 +89,7 @@ jobs:
             # minikube status
             # sudo chmod 666 /var/run/docker.sock
             docker --version
-            dockerpath="78dadb74358b/capston"
+            dockerpath="78dadb74358b/helloworldweb"
             kubectl run my-eks-demo --image=$dockerpath --port=80
             kubectl get pods
             kubectl port-forward my-eks-demo 8000:80
