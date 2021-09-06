@@ -13,7 +13,7 @@ spec:
         app: nginx
     spec:
       containers:
-      - name: nginx
-        image: nginx:1.7.9
+      - name: 78dadb74358b
+        image: 78dadb74358b:helloworldweb
         ports:
         - containerPort: 80
