@@ -98,9 +98,11 @@ jobs:
       #       curl -v http://localhost:8080/index.html
       - kubernetes/create-or-update-resource:
          resource-file-path: "tests/nginx-deployment/deployment.yaml"
-         resource-name: "deployment/nginx-deployment"
+         resource-name: "deployment/nginx-deployment-new"
          get-rollout-status: true
          show-kubectl-command: true
+      - kubernetes/create-or-update-resource:
+          resource-file-path: "tests/nginx-deployment/deployment2.yaml"
 
 
 orbs:
@@ -115,21 +117,21 @@ workflows:
       #     cluster-name: my-eks-demo
       #     requires:
       #       - create-cluster
-      # - create-deployment:
-      #     name: create-deployment-kubectl
-      #     executor: aws-eks/python
-      #     region: "us-east-2"
-      #     cluster-name: my-eks-demo
+      - create-deployment:
+          name: create-deployment-kubectl
+          executor: aws-eks/python
+          region: "us-east-2"
+          cluster-name: my-eks-demo
           # requires:
           #   - create-cluster
-      - aws-eks/update-container-image:
-         name: update-container-image-kubectl
-         cluster-name: my-eks-demo
-        #  aws-region: "us-east-2"
-         resource-name: "deployment"
-         container-image-updates: "78dadb74358b:capston2"
-         get-rollout-status: true
-         record: true
+      # - aws-eks/update-container-image:
+      #    name: update-container-image-kubectl
+      #    cluster-name: my-eks-demo
+      #   #  aws-region: "us-east-2"
+      #    resource-name: "deployment"
+      #    container-image-updates: "78dadb74358b:capston2"
+      #    get-rollout-status: true
+      #    record: true
         #  post-steps:
         #    - kubernetes/delete-resource:
         #        resource-types: "deployments"
