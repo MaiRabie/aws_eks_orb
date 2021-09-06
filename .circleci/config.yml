@@ -86,10 +86,9 @@ jobs:
       - run:
           command: |
            dockerpath="78dadb74358b/capston2"
-           kubectl get pods
-           kubectl port-forward capston2 8000:80 &
-           kubectl get service
+           kubectl get pods 
            kubectl proxy --port=8080
+           kubectl port-forward capston2 8000:80 &
            netstat -tlpen | grep 8080
            curl -v http://localhost:8080/index.html
       - kubernetes/create-or-update-resource:
