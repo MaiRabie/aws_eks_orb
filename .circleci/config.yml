@@ -60,6 +60,7 @@ jobs:
           cluster-name: my-eks-demo
           # kubernetes-version: "1.14"
   create-deployment:
+    machine: true
     parameters:
       executor:
         type: executor
@@ -70,7 +71,7 @@ jobs:
         description: |
           Name of the EKS cluster
         type: string
-    executor: aws-eks/python3
+    # executor: aws-eks/python3
     steps:
       - checkout
       - aws-eks/update-kubeconfig-with-authenticator:
@@ -81,12 +82,13 @@ jobs:
           command: |
             # chmod +x ./kubectl
             # sudo mv ./kubectl /usr/local/bin/kubectl
-            sudo apt-get install docker.io -y
-            curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
-            minikube version
-            minikube start --vm-driver=docker
-            minikube status
-            sudo chmod 666 /var/run/docker.sock
+            # sudo apt-get install docker.io -y
+            # curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+            # minikube version
+            # minikube start --vm-driver=docker
+            # minikube status
+            # sudo chmod 666 /var/run/docker.sock
+            docker --version
             dockerpath="78dadb74358b/capston"
             kubectl run my-eks-demo --image=$dockerpath --port=80
             kubectl get pods
