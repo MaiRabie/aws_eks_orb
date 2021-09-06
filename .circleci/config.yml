@@ -87,8 +87,8 @@ jobs:
           command: |
            dockerpath="78dadb74358b/capston2"
            kubectl get pods
-           kubectl port-forward nginx-deployment-54f57cf6bf-75n87 8000:80
-           netstat -tulpn
+           kubectl port-forward nginx-deployment-54f57cf6bf-75n87 8000:80 && netstat -tulpn
+           
            curl -v http://localhost:8080/index.html
       - kubernetes/create-or-update-resource:
 #          resource-name: "deployment/nginx-deployment"
