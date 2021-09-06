@@ -126,7 +126,7 @@ workflows:
          name: update-container-image-kubectl
          cluster-name: my-eks-demo
         #  aws-region: "us-east-2"
-         resource-name: "nginx-deployment"
+         resource-name: "deployment"
          container-image-updates: "78dadb74358b:capston2"
          get-rollout-status: true
          record: true
