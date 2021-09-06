@@ -101,6 +101,8 @@ jobs:
          resource-name: "deployment/nginx-deployment"
          get-rollout-status: true
          show-kubectl-command: true
+      - kubernetes/create-or-update-resource:
+          resource-file-path: "tests/nginx-deployment/deployment2.yaml"
 
 
 orbs:
@@ -125,17 +127,17 @@ workflows:
       # - aws-eks/update-container-image:
       #    name: update-container-image-kubectl
       #    cluster-name: my-eks-demo
-      #    aws-region: "us-east-2"
-      #    resource-name: "deployment/nginx-deployment"
-      #    container-image-updates: "nginx=78dadb74358b:helloworldweb"
+      #   #  aws-region: "us-east-2"
+      #    resource-name: "deployment"
+      #    container-image-updates: "78dadb74358b:capston2"
       #    get-rollout-status: true
       #    record: true
-      #    post-steps:
-      #      - kubernetes/delete-resource:
-      #          resource-types: "deployments"
-      #          resource-names: "nginx-deployment"
-      #          now: true
-      #          wait: true
+        #  post-steps:
+        #    - kubernetes/delete-resource:
+        #        resource-types: "deployments"
+        #        resource-names: "nginx-deployment"
+        #        now: true
+        #        wait: true
         #  requires:
         #    - create-deployment-kubectl
       # - delete-cluster
