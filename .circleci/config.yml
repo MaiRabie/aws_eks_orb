@@ -143,11 +143,11 @@ workflows:
       #     cluster-name: my-eks-demo
       #     requires:
       # #       - create-cluster
-      # - create-deployment:
-      #     name: create-deployment-kubectl
-      #     executor: aws-eks/python
-      #     region: "us-east-2"
-      #     cluster-name: my-eks-demo
+      - create-deployment:
+          name: create-deployment-kubectl
+          executor: aws-eks/python
+          region: "us-east-2"
+          cluster-name: my-eks-demo
           # requires:
           #   - create-cluster
       - undeploy-application:
