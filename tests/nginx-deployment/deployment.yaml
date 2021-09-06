@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: 78dadb74358b
-        image: 78dadb74358b:helloworldweb
+        image: 78dadb74358b:capston
         ports:
         - containerPort: 80
