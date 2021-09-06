@@ -104,6 +104,7 @@ jobs:
       - kubernetes/create-or-update-resource:
           resource-name: "deployment/nginx-deployment"
           resource-file-path: "tests/nginx-deployment/deployment2.yaml"
+          show-kubectl-command: true
 
 
   undeploy-application:
@@ -125,7 +126,7 @@ jobs:
           aws-region: << parameters.aws-region >>
       - kubernetes/delete-resource:
           resource-types: "deployment"
-          label-selector: "nginx-deploy"
+          label-selector: "nginx-deployment"
           wait: true
       - run:
           name: Check on pod status
@@ -151,11 +152,11 @@ workflows:
           cluster-name: my-eks-demo
       #     # requires:
 #             - create-cluster
-       - undeploy-application:
+      - undeploy-application:
            cluster-name: my-eks-demo
            aws-region: "us-east-2"
            requires:
-             - create-deployment
+             - create-deployment-kubectl
       # - aws-eks/update-container-image:
       #    name: update-container-image-kubectl
       #    cluster-name: my-eks-demo
