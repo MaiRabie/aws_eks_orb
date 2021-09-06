@@ -98,7 +98,7 @@ jobs:
       #       curl -v http://localhost:8080/index.html
       - kubernetes/create-or-update-resource:
          resource-file-path: "tests/nginx-deployment/deployment.yaml"
-         resource-name: "deployment/nginx-deployment-new"
+         resource-name: "deployment/nginx-deploy"
          get-rollout-status: true
          show-kubectl-command: true
       - kubernetes/create-or-update-resource:
@@ -124,7 +124,7 @@ jobs:
           aws-region: << parameters.aws-region >>
       - kubernetes/delete-resource:
           resource-types: "deployment"
-          label-selector: "nginx-deployment-new"
+          label-selector: "nginx-deploy"
           wait: true
       - run:
           name: Check on pod status
@@ -149,12 +149,12 @@ workflows:
           region: "us-east-2"
           cluster-name: my-eks-demo
       #     # requires:
-          #   - create-cluster
-      # - undeploy-application:
-      #     cluster-name: my-eks-demo
-      #     aws-region: "us-east-2"
-          # requires:
-          #   - create-deployment          
+#             - create-cluster
+      - undeploy-application:
+           cluster-name: my-eks-demo
+           aws-region: "us-east-2"
+           requires:
+             - create-deployment-kubectl
       # - aws-eks/update-container-image:
       #    name: update-container-image-kubectl
       #    cluster-name: my-eks-demo
