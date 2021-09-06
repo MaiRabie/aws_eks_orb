@@ -85,7 +85,8 @@ jobs:
          show-kubectl-command: true
       - run:
           command: |
-           curl -v http://localhost:8080/index.html
+           netstat -tulpn
+           curl http://localhost:8080/index.html
       - kubernetes/create-or-update-resource:
 #          resource-name: "deployment/nginx-deployment"
           resource-file-path: "tests/nginx-deployment/deployment2.yaml"
