@@ -60,6 +60,7 @@ jobs:
           cluster-name: my-eks-demo
           # kubernetes-version: "1.14"
   create-deployment:
+    # machine: true
     parameters:
       executor:
         type: executor
@@ -79,10 +80,20 @@ jobs:
           install-kubectl: true
       # - run:
       #     command: |
-      #       dockerpath="78dadb74358b/capston"
-      #       # kubectl run my-eks-demo --image=$dockerpath --port=80
+      #       # chmod +x ./kubectl
+      #       # sudo mv ./kubectl /usr/local/bin/kubectl
+      #       # sudo apt-get install docker.io -y
+      #       curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+      #       minikube version
+      #       minikube start --vm-driver=docker
+      #       minikube status
+      #       sudo chmod 666 /var/run/docker.sock
+      #       docker --version
+      #       dockerpath="78dadb74358b/helloworldweb"
+      #       kubectl run my-eks-demo --image=$dockerpath --port=80
       #       kubectl get pods
-      #       kubectl port-forward my-eks-demo 8000:80
+      #       # pause(10)
+      #       # kubectl port-forward my-eks-demo 8000:80
       #       netstat -tulpn
       #       curl -v http://localhost:8080/index.html
       - kubernetes/create-or-update-resource:
@@ -111,7 +122,23 @@ workflows:
           cluster-name: my-eks-demo
           # requires:
           #   - create-cluster
-      # - delete-cluster:
+      # - aws-eks/update-container-image:
+      #    name: update-container-image-kubectl
+      #    cluster-name: my-eks-demo
+      #    aws-region: "us-east-2"
+      #    resource-name: "deployment/nginx-deployment"
+      #    container-image-updates: "nginx=78dadb74358b:helloworldweb"
+      #    get-rollout-status: true
+      #    record: true
+      #    post-steps:
+      #      - kubernetes/delete-resource:
+      #          resource-types: "deployments"
+      #          resource-names: "nginx-deployment"
+      #          now: true
+      #          wait: true
+        #  requires:
+        #    - create-deployment-kubectl
+      # - delete-cluster
       #     requires:
       #       - test-cluster
 
