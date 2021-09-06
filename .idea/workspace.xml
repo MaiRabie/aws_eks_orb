@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ccec1277-6391-4b73-84d8-b31c8d99ced8" name="Default Changelist" comment="">
+    <list default="true" id="1344132a-367b-43a4-a886-a41b317fd7be" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.circleci/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.circleci/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/install-eksctl.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/install-eksctl.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/nginx-deployment/deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/nginx-deployment/deployment.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/nginx-deployment/deployment2.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/nginx-deployment/deployment2.yaml" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,63 +17,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.circleci/config.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="704">
-              <caret line="32" column="26" selection-start-line="32" selection-start-column="26" selection-end-line="32" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/commands/create-cluster.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-7875">
-              <caret line="16" column="33" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/commands/install-eksctl.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="14" column="131" selection-start-line="14" selection-start-column="131" selection-end-line="14" selection-end-column="131" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/nginx-deployment/deployment.yaml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/@orb.yml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/executors/python3.yml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/executors/python2.yml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/executors/python.yml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/dev-notes.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="506">
-                <caret line="26" column="15" selection-start-line="26" selection-start-column="3" selection-end-line="26" selection-end-column="15" />
-              </first_editor>
-              <second_editor />
+            <state relative-caret-position="371">
+              <caret line="160" column="36" lean-forward="true" selection-start-line="160" selection-start-column="36" selection-end-line="160" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -80,8 +26,44 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.circleci/org">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1255">
-              <caret line="583" column="30" selection-start-line="583" selection-start-column="8" selection-end-line="583" selection-end-column="30" />
+            <state relative-caret-position="438">
+              <caret line="383" column="31" selection-start-line="383" selection-start-column="31" selection-end-line="383" selection-end-column="69" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/nginx-deployment/deployment.yaml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="88">
+              <caret line="4" column="5" lean-forward="true" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/nginx-deployment/deployment2.yaml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="22">
+              <caret line="1" column="16" lean-forward="true" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/commands/update-kubeconfig-with-authenticator.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="202">
+              <caret line="67" column="31" selection-start-line="67" selection-start-column="31" selection-end-line="67" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/jobs/install-helm-on-cluster.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="202">
+              <caret line="99" column="27" selection-start-line="99" selection-start-column="27" selection-end-line="99" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -90,27 +72,13 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>eddiewebb/queue@1.1.2</find>
-      <find>queue</find>
-      <find>setup-cluster-with-many-params</find>
-      <find>$AWS_DEFAULT_REGION</find>
-      <find>region: {$AWS_DEFAULT_REGION}</find>
-      <find>circleci/aws-ek</find>
-      <find>aws-ecr/build_and_push_image</find>
-      <find>build_and_push_image</find>
-      <find>AWS_DEFAULT_REGION</find>
-      <find>project</find>
-      <find>aws_access_key_id</find>
-      <find>placeholders</find>
-      <find>create-cluster</find>
-      <find>AWS_ECR_URL</find>
-      <find>AWS_ACCESS_KEY_ID</find>
-      <find>executor</find>
-      <find>deploy-application</find>
-      <find>create</find>
-      <find>aws-eks/create-cluster</find>
-      <find>create-deployment</find>
       <find>curl --silent --l</find>
+      <find>https://storage.googleapis.com/kubernetes-release/release/stable.tx</find>
+      <find>create-deployment</find>
+      <find>install-kubectl</find>
+      <find>ubernetes/create-or-update-resource:</find>
+      <find>--dry-run</find>
+      <find>nginx-deployment</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -119,18 +87,16 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/docs/dev-notes.md" />
-        <option value="$PROJECT_DIR$/.circleci/org" />
-        <option value="$PROJECT_DIR$/src/commands/install-eksctl.yml" />
+        <option value="$PROJECT_DIR$/tests/nginx-deployment/deployment2.yaml" />
+        <option value="$PROJECT_DIR$/tests/nginx-deployment/deployment.yaml" />
         <option value="$PROJECT_DIR$/.circleci/config.yml" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
-    <option name="width" value="1158" />
-    <option name="height" value="928" />
+    <option name="x" value="-8" />
+    <option name="width" value="1934" />
+    <option name="height" value="1038" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -157,24 +123,13 @@
             <path>
               <item name="aws_eks_orb" type="b2602c69:ProjectViewProjectNode" />
               <item name="aws_eks_orb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="aws_eks_orb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aws_eks_orb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="commands" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="aws_eks_orb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aws_eks_orb" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="jobs" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="aws_eks_orb" type="b2602c69:ProjectViewProjectNode" />
               <item name="aws_eks_orb" type="462c0819:PsiDirectoryNode" />
               <item name="tests" type="462c0819:PsiDirectoryNode" />
+              <item name="kubernetes-dashboard" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="aws_eks_orb" type="b2602c69:ProjectViewProjectNode" />
@@ -190,9 +145,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../circleci-demo-aws-eks" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -210,13 +163,6 @@
     <configuration />
   </component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="ccec1277-6391-4b73-84d8-b31c8d99ced8" name="Default Changelist" comment="" />
-      <created>1630697901138</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1630697901138</updated>
-    </task>
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -224,7 +170,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.285809" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.285809" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" visible="true" weight="0.055718474" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
@@ -243,44 +189,48 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/LICENSE">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="5" column="70" selection-start-line="5" selection-start-column="70" selection-end-line="5" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deployment/demo-app-deployment.yaml.template">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="25" column="4" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.MD">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="1276">
-            <caret line="58" column="13" selection-start-line="58" selection-start-column="13" selection-end-line="58" selection-end-column="13" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deployment/demo-app-service.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="70" lean-forward="true" selection-start-line="7" selection-start-column="70" selection-end-line="7" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/demo_app/Dockerfile">
+    <entry file="file://$PROJECT_DIR$/src/@orb.yml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/demo_app/src/main.go">
+    <entry file="file://$PROJECT_DIR$/src/executors/python3.yml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/executors/python2.yml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/executors/python.yml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/commands/install-eksctl.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
+        <state relative-caret-position="484">
+          <caret line="22" column="29" lean-forward="true" selection-start-line="8" selection-end-line="22" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/commands/install-aws-iam-authenticator.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-330" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/examples/create-eks-cluster.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="13" column="31" lean-forward="true" selection-start-line="13" selection-start-column="31" selection-end-line="13" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jobs/create-cluster.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1826">
+          <caret line="83" column="31" selection-start-line="83" selection-start-column="31" selection-end-line="83" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/commands/create-cluster.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-7413">
+          <caret line="16" column="33" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -294,46 +244,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/executors/python2.yml">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/src/jobs/install-helm-on-cluster.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="99" column="27" selection-start-line="99" selection-start-column="27" selection-end-line="99" selection-end-column="27" />
+        </state>
+      </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/executors/python.yml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/executors/python3.yml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/@orb.yml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/nginx-deployment/deployment.yaml">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/src/commands/update-kubeconfig-with-authenticator.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="67" column="31" selection-start-line="67" selection-start-column="31" selection-end-line="67" selection-end-column="31" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.circleci/org">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1255">
-          <caret line="583" column="30" selection-start-line="583" selection-start-column="8" selection-end-line="583" selection-end-column="30" />
+        <state relative-caret-position="438">
+          <caret line="383" column="31" selection-start-line="383" selection-start-column="31" selection-end-line="383" selection-end-column="69" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/commands/create-cluster.yml">
+    <entry file="file://$PROJECT_DIR$/tests/nginx-deployment/deployment.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7875">
-          <caret line="16" column="33" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
+        <state relative-caret-position="88">
+          <caret line="4" column="5" lean-forward="true" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/commands/install-eksctl.yml">
+    <entry file="file://$PROJECT_DIR$/tests/nginx-deployment/deployment2.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="14" column="131" selection-start-line="14" selection-start-column="131" selection-end-line="14" selection-end-column="131" />
+        <state relative-caret-position="22">
+          <caret line="1" column="16" lean-forward="true" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.circleci/config.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="704">
-          <caret line="32" column="26" selection-start-line="32" selection-start-column="26" selection-end-line="32" selection-end-column="26" />
+        <state relative-caret-position="371">
+          <caret line="160" column="36" lean-forward="true" selection-start-line="160" selection-start-column="36" selection-end-line="160" selection-end-column="36" />
         </state>
       </provider>
     </entry>
