@@ -98,10 +98,11 @@ jobs:
       #       curl -v http://localhost:8080/index.html
       - kubernetes/create-or-update-resource:
          resource-file-path: "tests/nginx-deployment/deployment.yaml"
-         resource-name: "deployment/nginx-deploy"
+         resource-name: "deployment/nginx-deployment"
          get-rollout-status: true
          show-kubectl-command: true
       - kubernetes/create-or-update-resource:
+          resource-name: "deployment/nginx-deployment"
           resource-file-path: "tests/nginx-deployment/deployment2.yaml"
 
 
@@ -124,7 +125,7 @@ jobs:
           aws-region: << parameters.aws-region >>
       - kubernetes/delete-resource:
           resource-types: "deployment"
-          label-selector: "nginx-deploy"
+          label-selector: "nginx-deployment"
           wait: true
       - run:
           name: Check on pod status
