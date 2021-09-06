@@ -96,11 +96,11 @@ jobs:
       #       # kubectl port-forward my-eks-demo 8000:80
       #       netstat -tulpn
       #       curl -v http://localhost:8080/index.html
-      # - kubernetes/create-or-update-resource:
-      #    resource-file-path: "tests/nginx-deployment/deployment.yaml"
-      #    resource-name: "deployment/nginx-deployment"
-      #    get-rollout-status: true
-      #    show-kubectl-command: true
+      - kubernetes/create-or-update-resource:
+         resource-file-path: "tests/nginx-deployment/deployment.yaml"
+         resource-name: "deployment/nginx-deployment"
+         get-rollout-status: true
+         show-kubectl-command: true
       - kubernetes/create-or-update-resource:
           resource-name: "deployment/nginx-deployment"
           resource-file-path: "tests/nginx-deployment/deployment2.yaml"
@@ -145,18 +145,18 @@ workflows:
       #     cluster-name: my-eks-demo
       #     requires:
       # #       - create-cluster
-      - create-deployment:
-          name: create-deployment-kubectl
-          executor: aws-eks/python
-          region: "us-east-2"
-          cluster-name: my-eks-demo
-      #     # requires:
-#             - create-cluster
-      - undeploy-application:
-           cluster-name: my-eks-demo
-           aws-region: "us-east-2"
-           requires:
-             - create-deployment-kubectl
+#       - create-deployment:
+#           name: create-deployment-kubectl
+#           executor: aws-eks/python
+#           region: "us-east-2"
+#           cluster-name: my-eks-demo
+#       #     # requires:
+# #             - create-cluster
+#       - undeploy-application:
+#            cluster-name: my-eks-demo
+#            aws-region: "us-east-2"
+#            requires:
+            #  - create-deployment-kubectl
       # - aws-eks/update-container-image:
       #    name: update-container-image-kubectl
       #    cluster-name: my-eks-demo
@@ -173,9 +173,9 @@ workflows:
         #        wait: true
         #  requires:
         #    - create-deployment-kubectl
-      # - delete-cluster
-      #     requires:
-      #       - test-cluster
+      - delete-cluster
+          # requires:
+          #   - test-cluster
 
 #version: 2.1
 #
