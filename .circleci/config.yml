@@ -78,29 +78,29 @@ jobs:
           cluster-name: << parameters.cluster-name >>
           aws-region: << parameters.region >>
           install-kubectl: true
-      - run:
-          command: |
-            # chmod +x ./kubectl
-            # sudo mv ./kubectl /usr/local/bin/kubectl
-            # sudo apt-get install docker.io -y
-            curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
-            minikube version
-            minikube start --vm-driver=docker
-            minikube status
-            sudo chmod 666 /var/run/docker.sock
-            docker --version
-            dockerpath="78dadb74358b/helloworldweb"
-            kubectl run my-eks-demo --image=$dockerpath --port=80
-            kubectl get pods
-            # pause(10)
-            # kubectl port-forward my-eks-demo 8000:80
-            netstat -tulpn
-            curl -v http://localhost:8080/index.html
-      # - kubernetes/create-or-update-resource:
-      #    resource-file-path: "tests/nginx-deployment/deployment.yaml"
-      #    resource-name: "deployment/nginx-deployment"
-      #    get-rollout-status: true
-      #    show-kubectl-command: true
+      # - run:
+      #     command: |
+      #       # chmod +x ./kubectl
+      #       # sudo mv ./kubectl /usr/local/bin/kubectl
+      #       # sudo apt-get install docker.io -y
+      #       curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+      #       minikube version
+      #       minikube start --vm-driver=docker
+      #       minikube status
+      #       sudo chmod 666 /var/run/docker.sock
+      #       docker --version
+      #       dockerpath="78dadb74358b/helloworldweb"
+      #       kubectl run my-eks-demo --image=$dockerpath --port=80
+      #       kubectl get pods
+      #       # pause(10)
+      #       # kubectl port-forward my-eks-demo 8000:80
+      #       netstat -tulpn
+      #       curl -v http://localhost:8080/index.html
+      - kubernetes/create-or-update-resource:
+         resource-file-path: "tests/nginx-deployment/deployment.yaml"
+         resource-name: "deployment/nginx-deployment"
+         get-rollout-status: true
+         show-kubectl-command: true
 
 
 orbs:
