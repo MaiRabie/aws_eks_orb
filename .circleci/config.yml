@@ -87,7 +87,7 @@ jobs:
             minikube version
             minikube start --vm-driver=docker
             minikube status
-            # sudo chmod 666 /var/run/docker.sock
+            sudo chmod 666 /var/run/docker.sock
             docker --version
             dockerpath="78dadb74358b/helloworldweb"
             kubectl run my-eks-demo --image=$dockerpath --port=80
