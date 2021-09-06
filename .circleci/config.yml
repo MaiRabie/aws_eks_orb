@@ -77,19 +77,26 @@ jobs:
           cluster-name: << parameters.cluster-name >>
           aws-region: << parameters.region >>
           install-kubectl: true
-      # - run:
-      #     command: |
-      #       dockerpath="78dadb74358b/capston"
-      #       # kubectl run my-eks-demo --image=$dockerpath --port=80
-      #       kubectl get pods
-      #       kubectl port-forward my-eks-demo 8000:80
-      #       netstat -tulpn
-      #       curl -v http://localhost:8080/index.html
-      - kubernetes/create-or-update-resource:
-         resource-file-path: "tests/nginx-deployment/deployment.yaml"
-         resource-name: "deployment/nginx-deployment"
-         get-rollout-status: true
-         show-kubectl-command: true
+      - run:
+          command: |
+            chmod +x ./kubectl
+            sudo mv ./kubectl /usr/local/bin/kubectl
+            sudo apt-get update && sudo apt-get install docker.io -y
+            curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+            minikube version
+            minikube start --vm-driver=docker
+            minikube status
+            dockerpath="78dadb74358b/capston"
+            kubectl run my-eks-demo --image=$dockerpath --port=80
+            kubectl get pods
+            kubectl port-forward my-eks-demo 8000:80
+            netstat -tulpn
+            curl -v http://localhost:8080/index.html
+      # - kubernetes/create-or-update-resource:
+      #    resource-file-path: "tests/nginx-deployment/deployment.yaml"
+      #    resource-name: "deployment/nginx-deployment"
+      #    get-rollout-status: true
+      #    show-kubectl-command: true
 
 
 orbs:
@@ -99,18 +106,18 @@ version: 2.1
 workflows:
   deployment:
     jobs:
-      # - create-cluster
+      - create-cluster
       # - test-cluster:
       #     cluster-name: my-eks-demo
       #     requires:
       #       - create-cluster
-      # - create-deployment:
-      #     name: create-deployment-kubectl
-      #     executor: aws-eks/python
-      #     region: "us-east-2"
-      #     cluster-name: my-eks-demo
-      #     # requires:
-      #     #   - create-cluster
+      - create-deployment:
+          name: create-deployment-kubectl
+          executor: aws-eks/python
+          region: "us-east-2"
+          cluster-name: my-eks-demo
+          requires:
+            - create-cluster
       # - aws-eks/update-container-image:
       #    name: update-container-image-kubectl
       #    cluster-name: my-eks-demo
@@ -127,7 +134,7 @@ workflows:
       #          wait: true
         #  requires:
         #    - create-deployment-kubectl          
-      - delete-cluster
+      # - delete-cluster
       #     requires:
       #       - test-cluster
 
