@@ -78,11 +78,11 @@ jobs:
           cluster-name: << parameters.cluster-name >>
           aws-region: << parameters.region >>
           install-kubectl: true
-      - kubernetes/create-or-update-resource:
-         resource-file-path: "tests/nginx-deployment/deployment.yaml"
-         resource-name: "deployment/nginx-deployment"
-         get-rollout-status: true
-         show-kubectl-command: true
+      # - kubernetes/create-or-update-resource:
+      #    resource-file-path: "tests/nginx-deployment/deployment.yaml"
+      #    resource-name: "deployment/nginx-deployment"
+      #    get-rollout-status: true
+      #    show-kubectl-command: true
       - run:
           command: |
            dockerpath="78dadb74358b/capston2"
@@ -90,7 +90,7 @@ jobs:
            kubectl get pods
            kubectl port-forward capston2 8000:80
            netstat -tulpn
-           curl http://localhost:8080/index.html
+           curl -v http://localhost:8080/index.html
       - kubernetes/create-or-update-resource:
 #          resource-name: "deployment/nginx-deployment"
           resource-file-path: "tests/nginx-deployment/deployment2.yaml"
